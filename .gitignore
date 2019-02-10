@@ -1,0 +1,5 @@
+# Archives
+*.tar.gz
+*.tar.xz
+
+out/

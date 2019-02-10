@@ -1,0 +1,33 @@
+{
+  "name": "photo",
+  "variants": {
+    "pink": {
+      "outline": {
+        "stroke": "#E54E7A"
+      },
+      "outline_bg": {
+        "stroke": "#E54E7A"
+      },
+      "land": {
+        "fill": "#E54E7A"
+      },
+      "sun": {
+        "fill": "#E54E7A"
+      }
+    },
+    "default": {
+      "outline": {
+        "stroke": "#B35C00"
+      },
+      "outline_bg": {
+        "stroke": "#B35C00"
+      },
+      "land": {
+        "fill": "#3BB300"
+      },
+      "sun": {
+        "fill": "#FFF200"
+      }
+    }
+  }
+}

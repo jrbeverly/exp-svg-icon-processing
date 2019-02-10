@@ -1,48 +1,52 @@
 const fs = require("fs"),
-  xml2js = require("xml2js");
+  xml2js = require("xml2js"),
+  jsonfile = require("jsonfile"),
+  builder = new xml2js.Builder(),
+  parser = new xml2js.Parser();
 
 module.exports.init = function() {
-  const definition = {
-    outline: {
-      stroke: "#E54E7A"
-    },
-    outline_bg: {
-      stroke: "#E54E7A"
-    },
-    land: {
-      fill: "#E54E7A"
-    },
-    sun: {
-        fill: "#E54E7A"
-    }
-  };
-
-  function process(parent, key, value) {
-    if (key == "id" && definition[value]) {
-      const match = definition[value];
+  function process(global, parent, key, value) {
+    if (key == "id" && global[value]) {
+      const match = global[value];
       Object.keys(match).forEach(v => {
-        console.log("[SET - %s] %s=%s", value, v, match[v]);
+        console.log("[%s] %s=%s", value, v, match[v]);
         parent[v] = match[v];
       });
     }
   }
 
-  function traverse(o, func) {
+  function traverse(o, func, global) {
     for (var i in o) {
-      func.apply(this, [o, i, o[i]]);
+      func.apply(this, [global, o, i, o[i]]);
       if (o[i] !== null && typeof o[i] == "object") {
-        traverse(o[i], func);
+        traverse(o[i], func, global);
       }
     }
   }
 
-  var builder = new xml2js.Builder();
-  var parser = new xml2js.Parser();
-  fs.readFile(__dirname + "/svg/logo.svg", function(err, data) {
-    parser.parseString(data, function(err, result) {
-      traverse(result.svg.g, process);
-      var xml = builder.buildObject(result);
-      fs.writeFileSync(__dirname + "/bin/logo.svg", xml);
+  function execute(parameters, file, output) {
+    fs.readFile(file, function(err, data) {
+      parser.parseString(data, function(err, result) {
+        traverse(result.svg.g, process, parameters);
+        const xml = builder.buildObject(result);
+        fs.writeFileSync(output, xml);
+      });
     });
-  });
+  }
+
+  function exec(file, source) {
+    jsonfile.readFile(file, function(err, obj) {
+      if (err) console.error(err);
+
+      console.log(`[INFO] ${obj.name}`);
+      const variants = Object.keys(obj.variants);
+      variants.forEach((key, index) => {
+        const params = obj.variants[key];
+        console.log(`[INFO] index:${index}`);
+        execute(params, source, __dirname + `/bin/${obj.name}-${key}.svg`);
+      });
+    });
+  }
+
+  exec(__dirname + "/svg/photos/definition.json", __dirname + `/svg/photos/logo.svg`);
 };

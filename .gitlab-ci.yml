@@ -6,9 +6,9 @@ stages:
 ##
 build:
   stage: "Build"
-  image: python
+  image: node:latest
   script:
-    - pip install --upgrade lxml
+    - npm install
     - node -e 'require("./run").init()'
   artifacts:
     expire_in: 1 week

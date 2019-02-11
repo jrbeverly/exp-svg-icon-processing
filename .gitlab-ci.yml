@@ -1,0 +1,16 @@
+stages:
+  - "Build"
+
+##
+## Build
+##
+build:
+  stage: "Build"
+  image: python
+  script:
+    - pip install --upgrade lxml
+    - node -e 'require("./run").init()'
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - bin/

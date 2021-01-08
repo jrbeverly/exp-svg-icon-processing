@@ -1,0 +1,20 @@
+{
+  "slug": "exp-svg-icon-processing",
+  "namespace": "jrbeverly",
+  "status": "archived",
+  "icon": "icon.svg",
+  "license": {
+    "type": "MIT",
+    "content": "Jonathan Beverly <jrbeverly>"
+  },
+  "topics": [
+    "nodejs",
+    "svg",
+    "rasterization",
+    "svg-icons"
+  ],
+  "languages": [
+    "JavaScript",
+    "Shell"
+  ]
+}

@@ -1,0 +1,17 @@
+slug: exp-svg-icon-processing
+description: An experiment for performing SVG icon processing
+project: workbench
+namespace:
+status: archived
+icon: icon.svg
+license:
+  type: MIT
+  content: Jonathan Beverly <jrbeverly>
+  year: 2019
+topics: |-
+  [
+    "nodejs",
+    "svg",
+    "rasterization",
+    "svg-icons"
+  ]
